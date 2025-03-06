@@ -26,18 +26,25 @@ def main():
     mid_y = SCREEN_HEIGHT / 2
     p1 = Player(mid_x, mid_y)
     af = AsteroidField()
-
+    # game loop
     while True:
+        # check for quit signal
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
+        # draw to the screen
         screen.fill("black")
         updatable.update(dt)
         for d in drawable:
             d.draw(screen)
-
+        # update the screen & set framerate
         pygame.display.flip()
-        dt = clock.tick(60) / 1000
+        dt = clock.tick(30) / 1000
+        # check game condition
+        for a in asteroids:
+            if p1.collision(a):
+                print("Game over!")
+                return
 
 if __name__ == "__main__":
     main()
